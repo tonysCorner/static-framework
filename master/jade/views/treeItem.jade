@@ -1,0 +1,6 @@
+i(ng-click="itemExpended(item, $event)",class="{{getItemIcon(item)}}")
+input(id="{{item[valueField]}}",type="checkbox",ng-model="item.checked",ng-if="canChecked",ng-change="warpCallback(item, $event)")
+span.text-field
+    label(for="{{item[valueField]}}",ng-click="itemExpended(item, $event)") {{item[textField]}}
+ul(ng-if="item.descendants && item.descendants.length",ng-show="item.$$isExpend")
+    li(ng-repeat="item in item.descendants" ng-include="'/app/views/treeItem.html'")

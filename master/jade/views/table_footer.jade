@@ -1,0 +1,6 @@
+ul.pagination.pagination-sm
+    li(ng-if='isFirst'): a(href='',ng-click='load(1);') «
+    li(ng-class='{active: pageIndex.isCurrentPage}',ng-repeat='pageIndex in pageList'): a(href='',ng-click='load(pageIndex.i)') {{ pageIndex.i }}
+    li(ng-if='isLast'): a(href='',ng-click='load(page.totalPageCount)') »
+    li(ng-show='page.totalSize')
+        span 当前第{{page.pageNum}}页，共{{page.totalPageCount}}页，{{page.totalSize}}条。

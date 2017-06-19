@@ -1,0 +1,11 @@
+.div#TelephoneController(ng-controller='TelephoneController')
+    .row(ng-show="!callCustomer")
+        h4.text-center 呼叫客户
+        h2.text-center {{app.customerMobile|ellipsis}}
+        div
+            p.pl-xl 通话时长
+            h5.text-center {{app.getTimer}}
+        .text-center
+            button.btn.btn-danger.btn-lg(ng-click="hangUp();") 挂断
+    .row.text-center(ng-show="customerStatus")
+        button.btn.btn-success.btn-lg(type="submit",ng-click="nextPageBtn();") 下一条

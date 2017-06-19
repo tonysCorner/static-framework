@@ -1,0 +1,203 @@
+/* ========================================================================
+   Component: offsidebar.less
+ ========================================================================== */
+ 
+//
+// A sidebar in offcanvas mode
+// Open status toggled via JS
+// -----------------------------------------
+
+@offsidebar-bg:           #fff;
+@offsidebar-border-color: greyscale(darken(@offsidebar-bg, 20%));
+@offsidebar-color:        @text-color;
+@offsidebar-wd:           @aside-wd + 15px;      // match the width with the main aside component
+
+.offsidebar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: @offsidebar-wd;
+  margin-top: (@navbar-height) * 2;
+  border-left: 1px solid @offsidebar-border-color;
+  background-color: @offsidebar-bg;
+  color: @offsidebar-color;
+  z-index: @z-index-main-section + 5;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  .transition(all .3s ease);
+  
+  > nav {
+    min-height: 100%;
+    overflow: hidden;
+    -webkit-transform: translateZ(0px);
+  }
+
+  .progress {
+    border: 0;
+  }
+
+  .nav > li > a {
+    &:hover, &:focus {
+      background-color: rgba(0,0,0,.025);
+    }
+  }
+
+  .tab-content {
+    padding: 0;
+    border: 0;
+  }
+  .nav-tabs.nav-justified > li {
+    > a, > a:hover, > a:focus {
+      background-color: transparent;
+      border: 0;
+      border-right: 1px solid rgba(0,0,0,.05);
+      border-bottom: 1px solid rgba(0,0,0,.05);
+      border-radius: 0;
+      color: @text-muted;
+    }
+    &.active > a {
+      //border-bottom-color: @brand-primary; 
+      color: @brand-primary;
+    }
+  }
+
+  @media @tablet {
+    margin-top: @navbar-height;
+  }
+}
+
+// Global open status (attach to body)
+.offsidebar-open  {
+  .offsidebar {
+    overflow-y: auto;
+  }
+  @media @tablet {
+    overflow-y: auto;
+  }
+}
+
+// No tranformation devices
+.no-csstransforms3d {
+  .offsidebar {
+    right: -@offsidebar-wd;
+  }
+  .offsidebar-open {
+    .offsidebar {
+      right: 0;
+    }
+  }
+}
+
+/* Transformation ready devices*/
+.csstransforms3d {
+  .offsidebar {
+    .translate3d( (@offsidebar-wd), 0, 0);
+  }
+  .offsidebar-open {
+    .offsidebar {
+      .translate3d(0, 0, 0);
+    }
+  }
+}
+
+//callcenter
+.telephone {
+  background: #E1E1E1;
+  width: 216px;
+  bottom: 0;
+  border-top: 1px solid #F0EFEF;
+  border-left: 1px solid #F0EFEF;
+  margin:0 auto;
+}
+.telephone .dialpad{
+  width: 206px;
+  margin: 0 auto;
+  margin-top: 5px;
+}
+.telephone .dialpad .screen{
+  height: 66px;
+  background:url(../img/screen_bg.png) no-repeat 0 0;
+
+}
+.telephone .dialpad .screen label{
+  float: left;
+  padding-left: 28px;
+  margin-left: 5px;
+  height: 15px;
+  background: url("../img/signal.png") no-repeat;
+  font-size:12px;
+}
+.telephone .dialpad .screen .prompt{
+  float: left;
+  width: 100%;
+  margin: 6px 0px 0px 0px;
+}
+.telephone .dialpad .screen .number{
+  clear: both;
+  padding: 0px;
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+  font-size: 20px;
+  font-family: "dialpad";
+  outline: none;
+  color: #000;
+}
+.telephone .dialpad .number-list{
+  width: 206px;
+  border-top: 1px solid #F3F3F3;
+  padding-top: 4px;
+  position: relative;
+  overflow: hidden;
+}
+.number-list dl{
+  width:1000px;
+}
+.number-list dl dd{
+  float: left;
+  width: 206px;
+  margin-right: 1px;
+}
+.number-list ul{
+  margin-right: -1px;
+  padding: 0 ;
+}
+.number-list ul li{
+  float: left;
+  list-style-type: none;
+  font-family: "Arial";
+  font-size: 18px;
+  color: #FFFFFF;
+  text-align: center;
+  width: 68px;
+  height: 36px;
+  line-height: 36px;
+  background: #999999 url("../img/ico_list.png") no-repeat 0 0;
+  margin: 0px 1px 1px 0px;
+  cursor: pointer;
+}
+.number-list ul li:hover{
+  background: #666 url("../img/ico_list.png") no-repeat 0 0;
+}
+.number-list ul li.asterisk{
+  background-position: 29px -39px;
+  text-indent: -99999px;
+}
+.number-list ul .calls{
+  width: 137px;
+  background-color: #3E8D3E;
+  background-position: 39px -142px;
+}
+
+.number-list ul .calls:hover{
+  background: #007900 url("../img/ico_list.png") no-repeat 0 0;
+  background-position: 39px -142px;
+}
+.number-list ul .backspace{
+  background-position: 23px -89px;
+}
+.number-list ul .backspace:hover{
+  background:  #666 url("../img/ico_list.png") no-repeat 0 0;
+  background-position: 23px -89px;
+}

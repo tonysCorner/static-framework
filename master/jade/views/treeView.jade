@@ -1,0 +1,8 @@
+.panel.panel-default
+    .panel-heading  {{title}}
+        .panel-body.row
+            ul.tree-view(id='{{treeId}}')
+                li(ng-repeat="item in treeData" ng-include="'/app/views/treeItem.html'")
+        .panel-footer.text-center
+            button.mb-sm.btn.btn-default(type='button',ng-click="$parent.closeThisDialog('Cancel')") 取消
+            button.mb-sm.btn.btn-success(type='button',ng-click='save($event)') 保存

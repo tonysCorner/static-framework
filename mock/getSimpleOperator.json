@@ -1,0 +1,18 @@
+{
+  "code": 0,
+  "msg": "SUCCESS",
+  "data": {
+    "operatorId": 10062,
+    "name": null,
+    "username": "lxj",
+    "mobile": null,
+    "email": null,
+    "sex": null,
+    "cityId": null,
+    "originalPassword": null,
+    "status": null,
+    "comment": null,
+    "createTime": null,
+    "updateTime": null
+  }
+}

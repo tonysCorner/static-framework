@@ -1,0 +1,50 @@
+.block-center.mt-xl.wd-xl(ng-controller="RegisterFormController as reg")
+  // START panel
+  .panel.panel-inverse.panel-flat
+    .panel-heading.text-center
+      a(href="javascript:;")
+        img.block-center.img-rounded(src='app/img/logo.jpg', alt='Image')
+    .panel-body
+      p.text-center.pv 用户注册
+      form.form-validate.mb-lg(role='form', name="reg.registerForm", novalidate='', ng-submit="reg.register()")
+        .form-group.has-feedback
+          label.text-muted 邮箱
+          input.form-control(type='email', name="account_email" placeholder='请输入邮箱帐号', autocomplete="off", ng-model="reg.account.email", required='')
+          span.fa.fa-envelope.form-control-feedback.text-muted
+          span.text-danger(ng-show="reg.registerForm.account_email.$dirty && reg.registerForm.account_email.$error.required") 邮箱帐号不能为空！
+          span.text-danger(ng-show="reg.registerForm.account_email.$dirty && reg.registerForm.account_email.$error.email") 邮箱帐号格式不正确！
+        .form-group.has-feedback
+          label.text-muted 密码
+          input#id-password.form-control(type='password', name="account_password", ng-model="reg.register.password", ng-pattern="/^[a-zA-Z0-9]{6,10}$/", required='')
+          span.fa.fa-lock.form-control-feedback.text-muted
+          span.text-danger(ng-show="reg.registerForm.account_password.$dirty && reg.registerForm.account_password.$error.required") 密码不能为空！
+          span.text-danger(ng-show="reg.registerForm.account_password.$dirty && reg.registerForm.account_password.$error.pattern") 密码为6-10位字母和数字组成！
+        .form-group.has-feedback
+          label.text-muted 确认密码
+          input.form-control(type='password', name="account_password_confirm", ng-model="reg.register.account_password_confirm", ui-validate="'$value==reg.register.password'" ui-validate-watch="'password'")
+          span.fa.fa-lock.form-control-feedback.text-muted
+          span.text-danger(ng-show="reg.registerForm.account_password_confirm.$dirty && reg.registerForm.account_password_confirm.$error.validator") 两次密码不一致！
+        .clearfix
+          .checkbox.c-checkbox.pull-left.mt0
+            label
+              input(type='checkbox', required='', name="account_agreed", ng-model="reg.account.agreed")
+              span.fa.fa-check
+              |  同意以下
+              a(href="#") 协议
+        .text-danger(ng-show="reg.registerForm.account_agreed.$dirty && reg.registerForm.account_agreed.$error.required") 请勾选协议
+
+        button.btn.btn-block.btn-success.mt-lg(type='submit') 注册
+
+      .alert.alert-danger.text-center(ng-show='reg.authMsg') {{reg.authMsg}}
+
+      p.pt-lg.text-center 已经注册?
+      a(ui-sref="page.login").btn.btn-block.btn-default 请登录
+
+  // END panel
+  .p-lg.text-center
+    span &copy; 
+    span(ng-bind="app.year") 
+    span  - 
+    span(ng-bind="app.name")
+    br
+    span(ng-bind="app.description")

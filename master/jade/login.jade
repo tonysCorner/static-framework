@@ -1,0 +1,74 @@
+doctype html
+html(lang="zh-CN",ng-app='login')
+    head
+        meta(charset='utf-8')
+        meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1')
+
+        meta(name='description', content='login')
+        meta(name="format-detection" content="telephone=no")
+        meta(name='keywords', content='app, responsive, angular, bootstrap, dashboard, admin')
+
+        title 登录
+        // Bootstrap styles
+        link(rel='stylesheet', href='app/css/bootstrap.css', data-ng-if="!login.layout.isRTL")
+        link(rel='stylesheet', href='app/css/bootstrap-rtl.css', data-ng-if="login.layout.isRTL")
+        // ngMaterial styles
+        link(rel='stylesheet', href='vendor/angular-material/angular-material.css')
+        // Application styles
+        link(rel='stylesheet', href='app/css/app.css?v=--version', data-ng-if="!login.layout.isRTL")
+        link(rel='stylesheet', href='app/css/app-rtl.css?v=--version', data-ng-if="login.layout.isRTL")
+        link(rel='stylesheet', href='app/css/base.css?v=--version')
+        link(rel='stylesheet', href='vendor/fontawesome/css/font-awesome.min.css?v=--version')
+        // Themes
+        link(rel='stylesheet', ng-src='login.layout.theme', data-ng-if="login.layout.theme")
+
+    body(data-ng-class="{ 'layout-fixed' : login.layout.isFixed, 'aside-collapsed' : login.layout.isCollapsed, 'layout-boxed' : login.layout.isBoxed, 'layout-fs': app.useFullLayout, 'hidden-footer': app.hiddenFooter, 'layout-h': login.layout.horizontal, 'aside-float': login.layout.isFloat, 'offsidebar-open': app.offsidebarOpen, 'aside-toggled': app.asideToggled}")
+        //div(data-preloader)
+
+        .wrapper(data-ui-view="", data-autoscroll='false')
+            .block-center.mt-xl.wd-xl
+                // START panel
+                .panel.panel-inverse.panel-flat
+                    .panel-heading.text-center
+                        a(href="javascript:;")
+                            img.block-center.img-rounded(src='app/img/logo.jpg', alt='Image')
+                    .panel-body
+                        p.text-center.pv 登录
+
+                        form.form-validate(ng-controller="LoginController",role='form', ng-submit="login()", name='loginForm', novalidate).mb-lg
+                            .form-group.has-feedback
+                                input#username.form-control(placeholder='请输入帐号', autocomplete="off", name="username",ng-model="username", required)
+                                span.fa.fa-envelope.form-control-feedback.text-muted
+                                span.text-danger(ng-show="loginForm.username.$dirty &&loginForm.username.$error.required",ng-cloak) 用户名是必须的
+                            .form-group.has-feedback
+                                input#exampleInputPassword1.form-control(type='password',placeholder='请输入密码', name="password",ng-model="password", required)
+                                span.fa.fa-lock.form-control-feedback.text-muted
+                                span.text-danger(ng-show="loginForm.password.$dirty &&loginForm.password.$error.required",ng-cloak) 密码是必须的
+                            .form-group.has-feedback.clearfix
+                                input#captcha.form-control.pull-left.pr.login-text-wd(placeholder='请输入验证码', autocomplete="off", name="captcha",ng-model="captcha",required)
+                                div.pull-right.login-img-code
+                                    img(ng-src="{{captchatp}}",ng-click="refreshCaptcha()")
+                                    a.text-muted(ng-click="refreshCaptcha()") 看不清楚？换张图
+                                span.text-danger(ng-show="loginForm.captcha.$dirty &&loginForm.captcha.$error.required",ng-cloak) 验证码是必须的
+                            .clearfix
+                                .checkbox.pull-left.mt0
+                                    label.c-checkbox
+                                        input(type='checkbox',name="remember",ng-model="remember",ng-checked="remember")
+                                        span.fa.fa-check
+                                        |  记住密码
+                                .pull-right
+                                    //a.text-muted(ui-sref="page.recover") 忘记密码?
+                            button.btn.btn-block.btn-success.mt-lg(type='submit') 登录
+                            span.text-danger(ng-show='authMsg',ng-cloak) {{authMsg||'账号或密码错误'}}
+                            //p.pt-lg.text-center 需要注册?
+                            //a(ui-sref="page.register").btn.btn-block.btn-default 注册
+                // END panel
+                .p-lg.text-center
+                    span(ng-bind="login.year")
+                    span &copy;
+                    span  -
+                    span(ng-bind="login.name")
+                    span(ng-bind="login.description")
+        script(src='app/js/base.js?v=--version')
+        script(src='vendor/angular-material/angular-material.js')
+        script(src='login/login.js?v=--version')

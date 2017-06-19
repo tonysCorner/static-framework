@@ -1,0 +1,26 @@
+# 忽略idea配置
+.idea
+# app文件
+app/pages
+app/views
+app/css
+app/js
+#忽略html
+index.html
+login.html
+# vendor�ļ�
+vendor/
+# 忽略.DS_Store
+.DS_Store
+#忽略依赖文件
+*.jar
+node_modules
+bower_components
+vendor/
+#bower_components
+#忽略eclipse配置
+.settings
+.classpath
+.project
+*.iml
+yarn.lock

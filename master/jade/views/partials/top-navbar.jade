@@ -1,0 +1,117 @@
+style.
+    .slice:before {
+        content: url(/app/img/icons/slice-icon.png);
+    }
+// START Top Navbar
+nav.navbar.topnavbar(role='navigation')
+    // START navbar header
+    .navbar-header
+        a.navbar-brand(href='#/')
+            .brand-logo
+                img.img-responsive(src="app/img/logo.png",style="height: 45px;", alt="App Logo")
+            .brand-logo-collapsed
+                img.img-responsive(src="app/img/logo-single.png", alt="App Logo")
+    // END navbar header
+
+    // START Nav wrapper
+    .nav-wrapper
+        // START Left navbar
+        ul.nav.navbar-nav
+            li(ng-if="!app.layout.isCollapsed")
+                // Button used to collapse the left sidebar. Only visible on tablet and desktops
+                a(href='', title="收缩", trigger-resize="", ng-click="app.layout.isCollapsed = !app.layout.isCollapsed", md-ink-ripple).hidden-xs
+                    em.fa.fa-navicon
+            li(ng-if="app.layout.isCollapsed")
+                // Button to show/hide the sidebar on mobile. Visible on mobile only.
+                a(href='', title="展开", trigger-resize="", ng-click="app.layout.isCollapsed = !app.layout.isCollapsed", md-ink-ripple).hidden-xs
+                    em.fa.fa-navicon
+            // START User avatar toggle
+            li
+                // Button used to collapse the left sidebar. Only visible on tablet and desktops
+                a(href='', title="用户", ng-click="toggleUserBlock()")
+                    em.icon-user
+            li
+                // Button used to collapse the left sidebar. Only visible on tablet and desktops
+                a(href='', title="修改密码", ng-click="openPwd()")
+                    em.fa.fa-edit
+            li.mr
+                a(href='')
+                    span.text-info {{user.name}}
+                // END User avatar toggle
+            // START User logout toggle
+        // END Left navbar
+        //#callCenter(ng-controller='TelephoneBtnController', ng-show='loginSucc', data-apiUrl="{{apiUrl}}",style="position:absolute;top:5px;right:66px;")
+          .btn.btn-success.pull-left(style="margin:13px 0 0 6px;",ng-show='loginStatus',ng-click="changeLoginStatus()") {{loginStatus}}
+          iframe#callCenterIframe(name="callCenterIframe",src="{{trustSrc}}",style="border:none;" height="60" width="480")
+        // START Right Navbar
+        //ul.nav.navbar-nav.navbar-right(ng-show='isShowCCbtn', ng-controller='TelephoneBtnController')
+        //  // Search icon
+        //  li
+        //    a(href='')
+        //      button.btn.btn-success(type='button',ng-click='evLogin()', ng-class="{disabled: isLogin}") 签入
+        //  li
+        //    a(href='')
+        //      button.btn.btn-success(type='button',ng-click='evLogout()', ng-class="{disabled: !isLogin}") 签出
+        //  //li
+        //  //  a(href='')
+        //  //    button.btn.btn-success(type='button',ng-click='evUnlink()', ng-class="{disabled: !isLogin}") 挂断
+        //  li
+        //    a(href='')
+        //      button.btn.btn-success(type='button',ng-click='evPause(isBusy)', ng-class="{disabled: !isLogin || isBusy}") 置忙
+        //  // START Offsidebar button
+        //  li
+        //    a(href='')
+        //      button.btn.btn-success(type='button',ng-click='evOnline(isBusy)', ng-class="{disabled: !isLogin || !isBusy}") 置闲
+        //  li
+        //    a(href='', ng-click="app.offsidebarOpen = !app.offsidebarOpen")
+        //      em.icon-notebook
+        ul.nav.navbar-nav.navbar-right
+            li(ng-show='isShowCCbtn')
+                a(href='', ng-click="app.offsidebarOpen = !app.offsidebarOpen")
+                    em.icon-notebook
+            li.dropdown.dropdown-list(uib-dropdown="",ng-show="sys&&sys.length")
+                a(uib-dropdown-toggle="", title="切换系统")
+                    em.icon-directions
+                    .label.label-info {{sys.length}}
+                ul.dropdown-menu(class="animated flipInX",style='top : 100%;')
+                    li
+                        .list-group
+                            // list item
+                            a.list-group-item(href='{{s.staticDomain}}',ng-repeat='s in sys')
+                                .media-box
+                                    .pull-left
+                                        em.fa.slice.fa-2x.text-info
+                                    .media-box-body.clearfix
+                                        p.m0 {{s.systemName}}
+                                        p.m0.text-muted: small {{s.systemName}}
+                            a.list-group-item(href='')
+                                small(translate="切换系统")
+                                span.label.label-info.pull-right {{sys.length}}
+            li
+                a(href='', title="登出", ng-click="logout()")
+                    em.icon-logout
+            // END Offsidebar menu
+        // END Right Navbar
+    // END Nav wrapper
+
+
+// END Top Navbar
+script(type="text/ng-template", id="resetPwdDialog")
+    form.form-validate(name='resetPwdForm',role='form',novalidate)
+        .panel.panel-default
+            .panel-heading   重置自己的密码
+            .panel-body.row
+                .form-group.col-md-6
+                    label.control-label(for='resetPwd1') 新密码:
+                    input#resetPwd1.form-control(type='text',placeholder='请输入新密码',name='resetPwd1',ng-model="resetPwd1",ng-pattern="/((?=.*\\d)(?=.*\\D)|(?=.*[a-zA-Z])(?=.*[^a-zA-Z]))^.{8,16}$/", required)
+                    span.text-danger(ng-show="resetPwdForm.resetPwd1.$dirty && resetPwdForm.resetPwd1.$error.required",ng-cloak) 新密码是必须的
+                    span.text-danger(ng-show="resetPwdForm.resetPwd1.$dirty && resetPwdForm.resetPwd1.$error.pattern",ng-cloak) 密码要求长度在8-16位，数字、字母、字符至少包含两种
+                .form-group.col-md-6
+                    label.control-label(for='resetPwd2') 重复密码:
+                    input#resetPwd2.form-control(type='text',placeholder='请输入新密码',ng-model="resetPwd2",name='resetPwd2', required)
+                    span.text-danger(ng-show="resetPwdForm.resetPwd1.$dirty && resetPwdForm.resetPwd1.$error.required",ng-cloak) 重复密码是必须的
+                    span.text-danger(ng-show="resetPwdForm.resetPwd1.$dirty && resetPwd1 != resetPwd2",ng-cloak) 两次输入的密码必须相同
+            .panel-footer.text-center
+                .btn-group
+                    button.mb-sm.btn.btn-default(type='button',ng-click="closeThisDialog('Cancel')") 取消
+                    button.mb-sm.btn.btn-success(type='button',ng-click='resetSelfPwd(resetPwdForm,closeThisDialog,resetPwd1)') 保存
